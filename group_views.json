@@ -1,0 +1,12 @@
+{
+    "d4a988df-11b1-44a3-bf95-403b822ec80c": {
+        "id": "d4a988df-11b1-44a3-bf95-403b822ec80c",
+        "name": "Main Menu at Home Page",
+        "display_name": "",
+        "order": 1,
+        "visible": true,
+        "login_required": false,
+        "layout": "grid",
+        "column_count": 3
+    }
+}
