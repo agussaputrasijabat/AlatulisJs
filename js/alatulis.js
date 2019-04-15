@@ -162,7 +162,7 @@ function GetCustomerPoint() {
 	});
 }
 
-function OnDocumentReady() {
+function InitCustomerPoint() {
 	if (config_wishlist.isLogged) {
 		GetCustomerPoint();
 		setInterval(function () {
@@ -173,4 +173,3 @@ function OnDocumentReady() {
 
 
 console.log("alatulis.js is loaded.");
-OnDocumentReady();
