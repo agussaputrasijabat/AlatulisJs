@@ -9,7 +9,7 @@
         "layout": "grid_no_padding",
         "corner_radius": 3,
         "column_count": 3,
-        "minimum_version": 52,
+        "minimum_app_version": 52,
         "background_color": "#FFFFFF"
     }
 }

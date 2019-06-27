@@ -1,5 +1,5 @@
 function Login(Email, Password, Timestamp) {
-	eval("window.login_" + Timestamp + "='';");
+	eval(`window.login_${Timestamp} = {IsLoading: true, Success: false}`);
 
 	$.ajax({
 		url: 'https://alatulis.com/login',
@@ -17,7 +17,7 @@ function Login(Email, Password, Timestamp) {
 		},
 		success: function (res) {
 			var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-			eval("window.login_" + Timestamp + "=" + IsAuthenticated);
+			eval(`window.login_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
 		},
 		error: function () {
 			Login(Email, Password, Timestamp);
@@ -26,7 +26,7 @@ function Login(Email, Password, Timestamp) {
 }
 
 function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
-	eval("window.register_" + Timestamp + "=''");
+	eval("window.register_" + Timestamp + "={IsLoading: true, Success: false}");
 	$.ajax({
 		url: "https://alatulis.com/login?create_account=1",
 		data: {
@@ -45,12 +45,12 @@ function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
 		},
 		success: function (res) {
 			var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-			eval("window.register_" + Timestamp + "=" + IsAuthenticated);
+			eval(`window.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
 		},
 		error: function () {
 			$.get('https://alatulis.com/akun-saya', function (res) {
 				var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-				eval("window.register_" + Timestamp + "=" + IsAuthenticated);
+				eval(`window.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
 			});
 		}
 	});
