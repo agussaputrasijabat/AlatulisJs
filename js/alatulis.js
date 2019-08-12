@@ -1,3 +1,28 @@
+function RedeemPoint(Point, Timestamp) {
+	eval(`window.redeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
+	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
+		action: "processredeempoints",
+		points: Point
+	}).done(function(res) {
+    eval(`window.redeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
+  })
+  .fail(function(res) {
+    eval(`window.redeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
+  })
+}
+
+function ClearRedeemPoint(Timestamp) {
+	eval(`window.clearredeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
+	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
+		action: "processclearpoints"
+	}).done(function(res) {
+    eval(`window.clearredeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
+  })
+  .fail(function(res) {
+    eval(`window.clearredeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
+  })
+}
+
 function Login(Email, Password, Timestamp) {
 	eval(`window.login_${Timestamp} = {IsLoading: true, Success: false}`);
 
@@ -59,7 +84,7 @@ function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
 function Cart(Timestamp) {
 	eval("window.cart_" + Timestamp + "=''");
 
-	$.post('https://alatulis.com/keranjang-belanja', {
+	$.post('https://alatulis.com/keranjang-belanja?rand=' + Timestamp, {
 		"ajax": 1,
 		"action": "update"
 	}, function (res) {
@@ -71,7 +96,7 @@ function Cart(Timestamp) {
 function AddToCart(ProductId, Quantity, Timestamp) {
 	eval("window.cart_" + Timestamp + "=''");
 	$.ajax({
-		url: "https://alatulis.com/keranjang-belanja",
+		url: "https://alatulis.com/keranjang-belanja?rand=" + Timestamp,
 		data: {
 			"token": prestashop.static_token,
 			"id_product": ProductId,
