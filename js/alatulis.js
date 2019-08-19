@@ -1,30 +1,30 @@
 function RedeemPoint(Point, Timestamp) {
-	eval(`localStorage.redeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
+	eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: true, Success: false}'`);
 	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
 		action: "processredeempoints",
 		points: Point
 	}).done(function(res) {
-    eval(`localStorage.redeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
+    eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: false, Success: true}'`);
   })
   .fail(function(res) {
-    eval(`localStorage.redeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
+    eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: false, Success: false}'`);
   })
 }
 
 function ClearRedeemPoint(Timestamp) {
-	eval(`localStorage.clearredeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
+	eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: true, Success: false}'`);
 	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
 		action: "processclearpoints"
 	}).done(function(res) {
-    eval(`localStorage.clearredeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
+    eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: false, Success: true}'`);
   })
   .fail(function(res) {
-    eval(`localStorage.clearredeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
+    eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: false, Success: false}'`);
   })
 }
 
 function Login(Email, Password, Timestamp) {
-	eval(`localStorage.login_${Timestamp} = {IsLoading: true, Success: false}`);
+	eval(`localStorage.login_${Timestamp} = '{IsLoading: true, Success: false}'`);
 
 	$.ajax({
 		url: 'https://alatulis.com/login',
@@ -42,7 +42,7 @@ function Login(Email, Password, Timestamp) {
 		},
 		success: function (res) {
 			var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-			eval(`localStorage.login_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
+			eval(`localStorage.login_${Timestamp} = '{IsLoading: false, Success: ${IsAuthenticated}}'`);
 		},
 		error: function () {
 			Login(Email, Password, Timestamp);
@@ -51,7 +51,7 @@ function Login(Email, Password, Timestamp) {
 }
 
 function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
-	eval("localStorage.register_" + Timestamp + "={IsLoading: true, Success: false}");
+	eval("localStorage.register_" + Timestamp + " = '{IsLoading: true, Success: false}'");
 	$.ajax({
 		url: "https://alatulis.com/login?create_account=1",
 		data: {
@@ -70,12 +70,12 @@ function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
 		},
 		success: function (res) {
 			var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-			eval(`localStorage.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
+			eval(`localStorage.register_${Timestamp} = '{IsLoading: false, Success: ${IsAuthenticated}}'`);
 		},
 		error: function () {
 			$.get('https://alatulis.com/akun-saya', function (res) {
 				var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-				eval(`localStorage.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
+				eval(`localStorage.register_${Timestamp} = '{IsLoading: false, Success: ${IsAuthenticated}}'`);
 			});
 		}
 	});
