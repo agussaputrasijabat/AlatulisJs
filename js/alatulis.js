@@ -1,30 +1,30 @@
 function RedeemPoint(Point, Timestamp) {
-	eval(`window.redeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
+	eval(`localStorage.redeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
 	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
 		action: "processredeempoints",
 		points: Point
 	}).done(function(res) {
-    eval(`window.redeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
+    eval(`localStorage.redeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
   })
   .fail(function(res) {
-    eval(`window.redeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
+    eval(`localStorage.redeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
   })
 }
 
 function ClearRedeemPoint(Timestamp) {
-	eval(`window.clearredeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
+	eval(`localStorage.clearredeempoint_${Timestamp} = {IsLoading: true, Success: false}`);
 	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
 		action: "processclearpoints"
 	}).done(function(res) {
-    eval(`window.clearredeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
+    eval(`localStorage.clearredeempoint_${Timestamp} = {IsLoading: false, Success: true}`);
   })
   .fail(function(res) {
-    eval(`window.clearredeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
+    eval(`localStorage.clearredeempoint_${Timestamp} = {IsLoading: false, Success: false}`);
   })
 }
 
 function Login(Email, Password, Timestamp) {
-	eval(`window.login_${Timestamp} = {IsLoading: true, Success: false}`);
+	eval(`localStorage.login_${Timestamp} = {IsLoading: true, Success: false}`);
 
 	$.ajax({
 		url: 'https://alatulis.com/login',
@@ -42,7 +42,7 @@ function Login(Email, Password, Timestamp) {
 		},
 		success: function (res) {
 			var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-			eval(`window.login_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
+			eval(`localStorage.login_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
 		},
 		error: function () {
 			Login(Email, Password, Timestamp);
@@ -51,7 +51,7 @@ function Login(Email, Password, Timestamp) {
 }
 
 function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
-	eval("window.register_" + Timestamp + "={IsLoading: true, Success: false}");
+	eval("localStorage.register_" + Timestamp + "={IsLoading: true, Success: false}");
 	$.ajax({
 		url: "https://alatulis.com/login?create_account=1",
 		data: {
@@ -70,31 +70,31 @@ function Register(Gender, Firstname, Lastname, Email, Password, Timestamp) {
 		},
 		success: function (res) {
 			var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-			eval(`window.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
+			eval(`localStorage.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
 		},
 		error: function () {
 			$.get('https://alatulis.com/akun-saya', function (res) {
 				var IsAuthenticated = res.indexOf('"isLogged":true') >= 0 ? true : false;
-				eval(`window.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
+				eval(`localStorage.register_${Timestamp} = {IsLoading: false, Success: ${IsAuthenticated}}`);
 			});
 		}
 	});
 }
 
 function Cart(Timestamp) {
-	eval("window.cart_" + Timestamp + "=''");
+	eval("localStorage.cart_" + Timestamp + "=''");
 
 	$.post('https://alatulis.com/keranjang-belanja?rand=' + Timestamp, {
 		"ajax": 1,
 		"action": "update"
 	}, function (res) {
 		var result = JSON.parse(res);
-		eval("window.cart_" + Timestamp + "=" + JSON.stringify(result.cart));
+		eval("localStorage.cart_" + Timestamp + "=" + JSON.stringify(result.cart));
 	});
 }
 
 function AddToCart(ProductId, Quantity, Timestamp) {
-	eval("window.cart_" + Timestamp + "=''");
+	eval("localStorage.cart_" + Timestamp + "=''");
 	$.ajax({
 		url: "https://alatulis.com/keranjang-belanja?rand=" + Timestamp,
 		data: {
@@ -112,13 +112,13 @@ function AddToCart(ProductId, Quantity, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("window.cart_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_" + Timestamp + "=" + JSON.stringify(result.cart));
 		}
 	});
 }
 
 function QuantityUp(ProductId, Timestamp) {
-	eval("window.cart_qty_" + Timestamp + "=''");
+	eval("localStorage.cart_qty_" + Timestamp + "=''");
 	$.ajax({
 		url: "https://alatulis.com/keranjang-belanja?update=1&id_product=" + ProductId + "&id_product_attribute=0&token=" + prestashop.static_token + "&op=up",
 		data: {
@@ -132,13 +132,13 @@ function QuantityUp(ProductId, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("window.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
 		}
 	});
 }
 
 function QuantityDown(ProductId, Timestamp) {
-	eval("window.cart_qty_" + Timestamp + "=''");
+	eval("localStorage.cart_qty_" + Timestamp + "=''");
 	$.ajax({
 		url: "https://alatulis.com/keranjang-belanja?update=1&id_product=" + ProductId + "&id_product_attribute=0&token=" + prestashop.static_token + "&op=down",
 		data: {
@@ -152,13 +152,13 @@ function QuantityDown(ProductId, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("window.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
 		}
 	});
 }
 
 function DeleteFromCart(ProductId, Timestamp) {
-	eval("window.cart_qty_" + Timestamp + "=''");
+	eval("localStorage.cart_qty_" + Timestamp + "=''");
 	$.ajax({
 		url: "https://alatulis.com/keranjang-belanja?delete=1&id_product=" + ProductId + "&id_product_attribute=0&token=" + prestashop.static_token,
 		data: {
@@ -172,18 +172,18 @@ function DeleteFromCart(ProductId, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("window.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
 		}
 	});
 }
 
 function GetCustomerPoint() {
-	if (window.customer_point === null || window.customer_point === undefined)
-		window.customer_point = "";
+	if (localStorage.customer_point === null || localStorage.customer_point === undefined)
+		localStorage.customer_point = "";
 
 	$.get("https://alatulis.com/module/loyaltyrewardpoints/customeraccount", function (res) {
 		var Point = $(res).find('#lrp-customer-account .points-card span:first').text();
-		window.customer_point = Point;
+		localStorage.customer_point = Point;
 	});
 }
 
