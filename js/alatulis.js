@@ -89,7 +89,7 @@ function Cart(Timestamp) {
 		"action": "update"
 	}, function (res) {
 		var result = JSON.parse(res);
-		eval("localStorage.cart_" + Timestamp + "=" + JSON.stringify(result.cart));
+		eval("localStorage.cart_" + Timestamp + "='" + JSON.stringify(result.cart) + "'");
 	});
 }
 
@@ -112,7 +112,7 @@ function AddToCart(ProductId, Quantity, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("localStorage.cart_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_" + Timestamp + "='" + JSON.stringify(result.cart) + "'");
 		}
 	});
 }
@@ -152,7 +152,7 @@ function QuantityDown(ProductId, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("localStorage.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_qty_" + Timestamp + "='" + JSON.stringify(result.cart) + "'");
 		}
 	});
 }
@@ -172,7 +172,7 @@ function DeleteFromCart(ProductId, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("localStorage.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_qty_" + Timestamp + "='" + JSON.stringify(result.cart) + "'");
 		}
 	});
 }
