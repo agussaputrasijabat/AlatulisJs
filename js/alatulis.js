@@ -3,24 +3,24 @@ function RedeemPoint(Point, Timestamp) {
 	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
 		action: "processredeempoints",
 		points: Point
-	}).done(function(res) {
-    eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: false, Success: true}'`);
-  })
-  .fail(function(res) {
-    eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: false, Success: false}'`);
-  })
+	}).done(function (res) {
+		eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: false, Success: true}'`);
+	})
+		.fail(function (res) {
+			eval(`localStorage.redeempoint_${Timestamp} = '{IsLoading: false, Success: false}'`);
+		})
 }
 
 function ClearRedeemPoint(Timestamp) {
 	eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: true, Success: false}'`);
 	$.post('https://alatulis.com/modules/loyaltyrewardpoints/ajax.php?route=lrpfrontcheckoutcontroller&rand=' + Timestamp, {
 		action: "processclearpoints"
-	}).done(function(res) {
-    eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: false, Success: true}'`);
-  })
-  .fail(function(res) {
-    eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: false, Success: false}'`);
-  })
+	}).done(function (res) {
+		eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: false, Success: true}'`);
+	})
+		.fail(function (res) {
+			eval(`localStorage.clearredeempoint_${Timestamp} = '{IsLoading: false, Success: false}'`);
+		})
 }
 
 function Login(Email, Password, Timestamp) {
@@ -132,7 +132,7 @@ function QuantityUp(ProductId, Timestamp) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
-			eval("localStorage.cart_qty_" + Timestamp + "=" + JSON.stringify(result.cart));
+			eval("localStorage.cart_qty_" + Timestamp + "='" + JSON.stringify(result.cart) + "'");
 		}
 	});
 }
