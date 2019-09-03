@@ -202,6 +202,7 @@ function GetWishlists() {
 		var wishlist = [];
 		var $table = $(res).find('#block-history table');
 		$table.find('tbody tr').each(function (i, tr) {
+			var id = parseInt($(tr).attr('id').split('_')[1]);
 			var name = $(tr).find('td').eq(0).text().trim();
 			var quantity = parseInt($(tr).find('td').eq(1).text().trim());
 			var seen = parseInt($(tr).find('td').eq(2).text().trim());
@@ -209,6 +210,7 @@ function GetWishlists() {
 			var is_default = $(tr).find('td').eq(5).find('.is_wish_list_default').length > 0;
 
 			wishlist.push({
+				id: id,
 				name: name,
 				quantity: quantity,
 				seen: seen,
