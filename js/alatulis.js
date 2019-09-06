@@ -226,7 +226,7 @@ function GetWishlists() {
 }
 
 function GetWishlistDetail(WishlistId) {
-	localStorage.wishlist = ``;
+	localStorage.wishlist_detail = ``;
 	$.get(`https://alatulis.com/modules/blockwishlist/managewishlist.php?rand=${Date.now()}&id_wishlist=${WishlistId}&refresh=false&`, function (res) {
 		var products = [];
 		var $ul = $(res).find(`ul.wlp_bought_list`);
@@ -235,9 +235,9 @@ function GetWishlistDetail(WishlistId) {
 			products.push({ id: $id });
 		});
 
-		localStorage.wishlist = `${JSON.stringify(products)}`;
+		localStorage.wishlist_detail = `${JSON.stringify(products)}`;
 	}).fail(function () {
-		localStorage.wishlist = `[]`;
+		localStorage.wishlist_detail = `[]`;
 	});
 }
 
