@@ -265,6 +265,7 @@ function DeleteWishlist(WishlistId) {
 
 function CreateWishlist(Name) {
 	var Token = prestashop.token;
+	localStorage.create_wishlist = `{ IsLoading: true, Success: false }`;
 	$.post(`https://alatulis.com/module/blockwishlist/mywishlist`, {
 		token: Token,
 		name: Name,
@@ -302,7 +303,7 @@ function DeleteProductFromWishlist(WishlistId, ProductId) {
 
 function AddProductToWishlist(WishlistId, ProductId) {
 	localStorage.add_product_wishlist = `{ IsLoading: true, Success: false }`;
-	$.post(`https://alatulis.com/modules/blockwishlist/cart.php?rand=1567487066161&action=add&id_product=10&quantity=1&token=15fda96f28bfc4864e137cfecb6cc8b3&id_product_attribute=false&id_wishlist=null`)
+	$.post(`https://alatulis.com/modules/blockwishlist/cart.php?rand=1567487066161&action=add&id_product=${ProductId}&quantity=1&token=15fda96f28bfc4864e137cfecb6cc8b3&id_product_attribute=false&id_wishlist=${WishlistId}`)
 		.done(function (res) {
 			var isSuccess = true;
 			var $ul = $(res).find(`ul.wlp_bought_list`);
