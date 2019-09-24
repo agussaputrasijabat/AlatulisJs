@@ -231,8 +231,9 @@ function GetWishlistDetail(WishlistId) {
 		var products = [];
 		var $ul = $(res).find(`ul.wlp_bought_list`);
 		$ul.find(`li`).each(function (i, li) {
-			var $id = $(li).attr(`id`).split(`_`)[1];
-			products.push({ id: $id });
+			var $id = parseInt($(li).attr(`id`).split(`_`)[1]);
+			var $qty = parseInt($(li).find('input:first').val());
+			products.push({ id: $id, minimal_quantity: $qty });
 		});
 
 		localStorage.wishlist_detail = `${JSON.stringify(products)}`;
@@ -303,7 +304,7 @@ function DeleteProductFromWishlist(WishlistId, ProductId) {
 
 function AddProductToWishlist(WishlistId, ProductId) {
 	localStorage.add_product_wishlist = `{ IsLoading: true, Success: false }`;
-	$.post(`https://alatulis.com/modules/blockwishlist/cart.php?rand=1567487066161&action=add&id_product=${ProductId}&quantity=1&token=15fda96f28bfc4864e137cfecb6cc8b3&id_product_attribute=false&id_wishlist=${WishlistId}`)
+	$.post(`https://alatulis.com/modules/blockwishlist/cart.php?rand=${Date.now()}&action=add&id_product=${ProductId}&quantity=1&token=15fda96f28bfc4864e137cfecb6cc8b3&id_product_attribute=false&id_wishlist=${WishlistId}`)
 		.done(function (res) {
 			var isSuccess = true;
 			var $ul = $(res).find(`ul.wlp_bought_list`);
@@ -312,6 +313,17 @@ function AddProductToWishlist(WishlistId, ProductId) {
 				if (id == ProductId) isSuccess = false;
 			});
 			localStorage.add_product_wishlist = `{ IsLoading: false, Success: ${isSuccess}}`
+		})
+		.fail(function (res) {
+			localStorage.add_product_wishlist = `{ IsLoading: false, Success: false }`;
+		})
+}
+
+function UpdateProductQuantityWishlist(WishlistId, ProductId, Quantity) {
+	localStorage.add_product_wishlist = `{ IsLoading: true, Success: false }`;
+	$.post(`https://alatulis.com/modules/blockwishlist/managewishlist.php?rand=${Date.now()}&action=update&id_wishlist=${WishlistId}&id_product=${ProductId}&id_product_attribute=0&quantity=${Quantity}&priority=1&refresh=true`)
+		.done(function (res) {
+			localStorage.add_product_wishlist = `{ IsLoading: false, Success: true}`;
 		})
 		.fail(function (res) {
 			localStorage.add_product_wishlist = `{ IsLoading: false, Success: false }`;
