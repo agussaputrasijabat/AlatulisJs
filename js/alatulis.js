@@ -89,6 +89,10 @@ function Cart() {
 		"action": "update"
 	}, function (res) {
 		var result = JSON.parse(res);
+		result.cart.products.forEach(product => {
+			product.name = product.name.replaceAll('"', "'")
+			delete product.embedded_attributes;
+		});
 		localStorage.cart = `${JSON.stringify(result.cart)}`;
 	});
 }
@@ -112,6 +116,10 @@ function AddToCart(ProductId, Quantity) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			result.cart.products.forEach(product => {
+				product.name = product.name.replaceAll('"', "'")
+				delete product.embedded_attributes;
+			});
 			localStorage.cart = `${JSON.stringify(result.cart)}`;
 		}
 	});
@@ -132,6 +140,10 @@ function QuantityUp(ProductId) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			result.cart.products.forEach(product => {
+				product.name = product.name.replaceAll('"', "'")
+				delete product.embedded_attributes;
+			});
 			localStorage.cart_qty = `${JSON.stringify(result.cart)}`;
 		}
 	});
@@ -152,6 +164,10 @@ function QuantityDown(ProductId) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			result.cart.products.forEach(product => {
+				product.name = product.name.replaceAll('"', "'")
+				delete product.embedded_attributes;
+			});
 			localStorage.cart_qty = `${JSON.stringify(result.cart)}`;
 		}
 	});
@@ -172,6 +188,10 @@ function DeleteFromCart(ProductId) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			result.cart.products.forEach(product => {
+				product.name = product.name.replaceAll('"', "'")
+				delete product.embedded_attributes;
+			});
 			localStorage.cart_qty = `${JSON.stringify(result.cart)}`;
 		}
 	});
@@ -329,5 +349,10 @@ function UpdateProductQuantityWishlist(WishlistId, ProductId, Quantity) {
 			localStorage.add_product_wishlist = `{ IsLoading: false, Success: false }`;
 		})
 }
+
+String.prototype.replaceAll = function(search, replacement) {
+	var target = this;
+	return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 console.log("alatulis.js is loaded.");
