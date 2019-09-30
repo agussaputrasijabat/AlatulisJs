@@ -89,11 +89,19 @@ function Cart() {
 		"action": "update"
 	}, function (res) {
 		var result = JSON.parse(res);
+		var userCarts = { products: [], totals: result.cart.totals, subtotals: result.cart.subtotals };
+
 		result.cart.products.forEach(product => {
-			product.name = product.name.replaceAll('"', "'")
-			delete product.embedded_attributes;
+			userCarts.products.push({
+				id_product: product.id_product,
+				name: product.name.replaceAll('"', "'"),
+				price: product.price,
+				quantity: product.quantity,
+				isbusy: false,
+				id_image: product.id_image
+			});
 		});
-		localStorage.cart = `${JSON.stringify(result.cart)}`;
+		localStorage.cart = `${JSON.stringify(userCarts)}`;
 	});
 }
 
@@ -116,11 +124,19 @@ function AddToCart(ProductId, Quantity) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			var userCarts = { products: [], totals: result.cart.totals, subtotals: result.cart.subtotals };
+
 			result.cart.products.forEach(product => {
-				product.name = product.name.replaceAll('"', "'")
-				delete product.embedded_attributes;
+				userCarts.products.push({
+					id_product: product.id_product,
+					name: product.name.replaceAll('"', "'"),
+					price: product.price,
+					quantity: product.quantity,
+					isbusy: false,
+					id_image: product.id_image
+				});
 			});
-			localStorage.cart = `${JSON.stringify(result.cart)}`;
+			localStorage.cart = `${JSON.stringify(userCarts)}`;
 		}
 	});
 }
@@ -140,11 +156,19 @@ function QuantityUp(ProductId) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			var userCarts = { products: [], totals: result.cart.totals, subtotals: result.cart.subtotals };
+
 			result.cart.products.forEach(product => {
-				product.name = product.name.replaceAll('"', "'")
-				delete product.embedded_attributes;
+				userCarts.products.push({
+					id_product: product.id_product,
+					name: product.name.replaceAll('"', "'"),
+					price: product.price,
+					quantity: product.quantity,
+					isbusy: false,
+					id_image: product.id_image
+				});
 			});
-			localStorage.cart_qty = `${JSON.stringify(result.cart)}`;
+			localStorage.cart_qty = `${JSON.stringify(userCarts)}`;
 		}
 	});
 }
@@ -164,11 +188,19 @@ function QuantityDown(ProductId) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			var userCarts = { products: [], totals: result.cart.totals, subtotals: result.cart.subtotals };
+
 			result.cart.products.forEach(product => {
-				product.name = product.name.replaceAll('"', "'")
-				delete product.embedded_attributes;
+				userCarts.products.push({
+					id_product: product.id_product,
+					name: product.name.replaceAll('"', "'"),
+					price: product.price,
+					quantity: product.quantity,
+					isbusy: false,
+					id_image: product.id_image
+				});
 			});
-			localStorage.cart_qty = `${JSON.stringify(result.cart)}`;
+			localStorage.cart_qty = `${JSON.stringify(userCarts)}`;
 		}
 	});
 }
@@ -188,11 +220,19 @@ function DeleteFromCart(ProductId) {
 		},
 		success: function (res) {
 			var result = JSON.parse(res);
+			var userCarts = { products: [], totals: result.cart.totals, subtotals: result.cart.subtotals };
+
 			result.cart.products.forEach(product => {
-				product.name = product.name.replaceAll('"', "'")
-				delete product.embedded_attributes;
+				userCarts.products.push({
+					id_product: product.id_product,
+					name: product.name.replaceAll('"', "'"),
+					price: product.price,
+					quantity: product.quantity,
+					isbusy: false,
+					id_image: product.id_image
+				});
 			});
-			localStorage.cart_qty = `${JSON.stringify(result.cart)}`;
+			localStorage.cart_qty = `${JSON.stringify(userCarts)}`;
 		}
 	});
 }
@@ -350,7 +390,7 @@ function UpdateProductQuantityWishlist(WishlistId, ProductId, Quantity) {
 		})
 }
 
-String.prototype.replaceAll = function(search, replacement) {
+String.prototype.replaceAll = function (search, replacement) {
 	var target = this;
 	return target.replace(new RegExp(search, 'g'), replacement);
 };
